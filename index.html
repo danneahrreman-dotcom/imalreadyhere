@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'm Already Here</title>
+  <style>
+    body {
+      background-color: #f4f6f8;
+      color: #222;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+    p {
+      font-size: 2rem;
+      margin: 1rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+    p.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <p id="line1">Det är här connection börjar.</p>
+  <p id="line2">Stanna här.</p>
+  <p id="line3">Du kan se mer än andra. Titta dig omkring. Och känn.</p>
+
+  <script>
+    // Visa raderna en efter en med fördröjning
+    window.addEventListener("load", () => {
+      setTimeout(() => document.getElementById("line1").classList.add("visible"), 500);
+      setTimeout(() => document.getElementById("line2").classList.add("visible"), 2500);
+      setTimeout(() => document.getElementById("line3").classList.add("visible"), 4500);
+    });
+  </script>
+</body>
+</html>
