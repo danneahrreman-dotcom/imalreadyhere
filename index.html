@@ -18,55 +18,56 @@
       text-align: center;
       padding: 20px;
       overflow: hidden;
-      transition: opacity 5s ease;
     }
-    p {
-      font-size: 2.5rem;
-      margin: 1rem 0;
-    }
-    .inline {
-      display: inline-block;
+
+    p { font-size: 2.5rem; margin: 1rem 0; }
+
+    /* Endast opacitet – ingen glidning */
+    #line1 {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 5s ease, transform 5s ease;
+      transition: opacity 3s ease; /* Punkt 1: 3 sek för första raden */
     }
-    .inline.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    body.fade-out {
+    #line1.visible { opacity: 1; }
+
+    .line {
       opacity: 0;
+      transition: opacity 3s ease; /* 3 sek för övriga delar */
     }
+    .line.visible { opacity: 1; }
   </style>
 </head>
 <body>
-  <p id="line1">Det är här connection börjar.</p>
+  <p><span id="line1">Det är här connection börjar.</span></p>
 
   <p>
-    <span id="line2a" class="inline">Stanna.</span>
-    <span id="line2b" class="inline"> Här.</span>
+    <span id="line2a" class="line">Stanna.</span>
+    <span id="line2b" class="line"> Här.</span>
   </p>
 
   <p>
-    <span id="line3a" class="inline">Titta dig omkring.</span>
-    <span id="line3b" class="inline"> Vad känner du?</span>
+    <span id="line3a" class="line">Titta dej omkring.</span>
+    <span id="line3b" class="line"> Vad känner du?</span>
   </p>
 
   <script>
+    // Tidslinje (sekunder -> ms):
+    // line1 start: 0.5s, varar 3s, slutar 3.5s
+    // line2a start: 3.5s (3 s efter att line1 började)
+    // line2b start: 9.5s (3 s mellan ord: 3.5s + 3s (fade) + 3s paus = 9.5s)
+    // line2b slutar 12.5s
+    // line3a start: 15.5s (3 s efter att "andra raden är klar" = 12.5s + 3s)
+    // line3b start: 18.5s (3 s mellan del 1 och del 2)
+
+    const ms = s => s * 1000;
+
     window.addEventListener("load", () => {
-      // Rad 1
-      setTimeout(() => document.getElementById("line1").classList.add("visible"), 500);
+      setTimeout(() => document.getElementById("line1").classList.add("visible"), ms(0.5));
 
-      // Rad 2a och 2b
-      setTimeout(() => document.getElementById("line2a").classList.add("visible"), 3000);
-      setTimeout(() => document.getElementById("line2b").classList.add("visible"), 6000);
+      setTimeout(() => document.getElementById("line2a").classList.add("visible"), ms(3.5));
+      setTimeout(() => document.getElementById("line2b").classList.add("visible"), ms(9.5));
 
-      // Rad 3a och 3b
-      setTimeout(() => document.getElementById("line3a").classList.add("visible"), 9000);
-      setTimeout(() => document.getElementById("line3b").classList.add("visible"), 12000);
-
-      // Fade out hela sidan 5 sekunder efter sista raden visas (≈17 sek totalt)
-      setTimeout(() => document.body.classList.add("fade-out"), 17000);
+      setTimeout(() => document.getElementById("line3a").classList.add("visible"), ms(15.5));
+      setTimeout(() => document.getElementById("line3b").classList.add("visible"), ms(18.5));
     });
   </script>
 </body>
