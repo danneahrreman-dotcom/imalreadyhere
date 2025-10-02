@@ -6,8 +6,8 @@
   <title>I'm Already Here</title>
   <style>
     body {
-      background-color: #E9F4FA; 
-      color: #1E3A5F;           
+      background-color: #E8F0EB; /* lugn bakgrund */
+      color: #2F3E46;           /* mjuk text */
       font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
       display: flex;
       flex-direction: column;
@@ -21,7 +21,7 @@
     }
 
     p {
-      font-size: 5rem; /* dubbel storlek */
+      font-size: 2.5rem; /* tillbaka till normal storlek */
       margin: 2rem 0;
     }
 
@@ -80,24 +80,22 @@
     const ms = s => s * 1000;
 
     window.addEventListener("load", () => {
-      // Första raden: börja fade:a in efter 3 sek (tar 3 s)
+      // Första raden: fade in efter 3s
       setTimeout(() => document.getElementById("line1").classList.add("visible"), ms(3));
 
-      // När första raden är klar: 3 + 3 = 6s + 3s paus = 9s
-      // Rad 2a fade in
+      // Andra raden: Stanna. fade in 9s
       setTimeout(() => document.getElementById("line2a").classList.add("visible"), ms(9));
-      // Rad 2a fade ut efter 3s stillestånd: 9 + 3 + 3 = 15s
+      // Stanna. fade ut helt (3s stilla + 3s fade) → 15s
       setTimeout(() => document.getElementById("line2a").classList.remove("visible"), ms(15));
-      // Rad 2b fade in: 15s
-      setTimeout(() => document.getElementById("line2b").classList.add("visible"), ms(15));
-      // Rad 2b står stilla i 3s efter fade-in (3s fade + 3s paus = 21s)
+      // Här. fade in EFTER fade ut är klar (ytterligare 3s) → 18s
+      setTimeout(() => document.getElementById("line2b").classList.add("visible"), ms(18));
 
-      // Rad 3a fade in: 21s
-      setTimeout(() => document.getElementById("line3a").classList.add("visible"), ms(21));
-      // Rad 3a fade ut efter 3s stillestånd: 21 + 3 + 3 = 27s
-      setTimeout(() => document.getElementById("line3a").classList.remove("visible"), ms(27));
-      // Rad 3b fade in: 27s
-      setTimeout(() => document.getElementById("line3b").classList.add("visible"), ms(27));
+      // Tredje raden: Titta dej omkring. fade in efter 3s paus → 24s
+      setTimeout(() => document.getElementById("line3a").classList.add("visible"), ms(24));
+      // Titta dej omkring. fade ut helt → 30s
+      setTimeout(() => document.getElementById("line3a").classList.remove("visible"), ms(30));
+      // Vad känner du? fade in → 33s
+      setTimeout(() => document.getElementById("line3b").classList.add("visible"), ms(33));
     });
   </script>
 </body>
