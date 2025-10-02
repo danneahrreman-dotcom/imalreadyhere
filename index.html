@@ -6,8 +6,8 @@
   <title>I'm Already Here</title>
   <style>
     body {
-      background-color: #E8F0EB;
-      color: #2F3E46;
+      background-color: #E9F4FA; 
+      color: #1E3A5F;           
       font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
       display: flex;
       flex-direction: column;
@@ -20,16 +20,19 @@
       overflow: hidden;
     }
 
-    p { font-size: 2.5rem; margin: 1rem 0; }
+    p {
+      font-size: 5rem; /* dubbel storlek */
+      margin: 2rem 0;
+    }
 
-    /* Enkel 3s fade (ingen glidning) */
     .fade {
       opacity: 0;
       transition: opacity 3s ease;
     }
-    .fade.visible { opacity: 1; }
+    .fade.visible {
+      opacity: 1;
+    }
 
-    /* Swap-container: två lager på exakt samma plats */
     .swap {
       position: relative;
       display: inline-block;
@@ -42,9 +45,9 @@
       transition: opacity 3s ease;
       white-space: nowrap;
     }
-    .swap .layer.visible { opacity: 1; }
-
-    /* Sizer låser utrymmet så inget hoppar när text byts */
+    .swap .layer.visible {
+      opacity: 1;
+    }
     .sizer {
       visibility: hidden;
       white-space: nowrap;
@@ -55,48 +58,46 @@
   <!-- Rad 1 -->
   <p><span id="line1" class="fade">Det är här connection börjar.</span></p>
 
-  <!-- Rad 2: Stanna. -> (fade ut) -> Här. på samma plats -->
+  <!-- Rad 2 -->
   <p>
     <span class="swap">
-      <span class="sizer">Här.</span> <!-- största av de två orden -->
+      <span class="sizer">Här.</span>
       <span id="line2a" class="layer">Stanna.</span>
       <span id="line2b" class="layer">Här.</span>
     </span>
   </p>
 
-  <!-- Rad 3: Titta dej omkring. -> (fade ut) -> Vad känner du? på samma plats -->
+  <!-- Rad 3 -->
   <p>
     <span class="swap">
-      <span class="sizer">Titta dej omkring.</span> <!-- den längsta frasen -->
+      <span class="sizer">Titta dej omkring.</span>
       <span id="line3a" class="layer">Titta dej omkring.</span>
       <span id="line3b" class="layer">Vad känner du?</span>
     </span>
   </p>
 
   <script>
-    // Hjälpfunktion för ms
     const ms = s => s * 1000;
 
     window.addEventListener("load", () => {
-      // --- Tidslinje ---
-      // Rad 1: start 0.5s, fade 3s, klar 3.5s
-      setTimeout(() => document.getElementById("line1").classList.add("visible"), ms(0.5));
+      // Första raden: börja fade:a in efter 3 sek (tar 3 s)
+      setTimeout(() => document.getElementById("line1").classList.add("visible"), ms(3));
 
-      // Paus 3s efter rad 1 är klar => Rad 2 börjar 6.5s
-      // Rad 2a (Stanna.) fade in 6.5–9.5
-      setTimeout(() => document.getElementById("line2a").classList.add("visible"), ms(6.5));
-      // Rad 2a fade ut 9.5–12.5
-      setTimeout(() => document.getElementById("line2a").classList.remove("visible"), ms(9.5));
-      // Rad 2b (Här.) fade in 12.5–15.5
-      setTimeout(() => document.getElementById("line2b").classList.add("visible"), ms(12.5));
+      // När första raden är klar: 3 + 3 = 6s + 3s paus = 9s
+      // Rad 2a fade in
+      setTimeout(() => document.getElementById("line2a").classList.add("visible"), ms(9));
+      // Rad 2a fade ut efter 3s stillestånd: 9 + 3 + 3 = 15s
+      setTimeout(() => document.getElementById("line2a").classList.remove("visible"), ms(15));
+      // Rad 2b fade in: 15s
+      setTimeout(() => document.getElementById("line2b").classList.add("visible"), ms(15));
+      // Rad 2b står stilla i 3s efter fade-in (3s fade + 3s paus = 21s)
 
-      // Paus 3s efter att "Här." är klar (klar 15.5s) => Rad 3 start 18.5s
-      // Rad 3a (Titta dej omkring.) fade in 18.5–21.5
-      setTimeout(() => document.getElementById("line3a").classList.add("visible"), ms(18.5));
-      // Rad 3a fade ut 21.5–24.5
-      setTimeout(() => document.getElementById("line3a").classList.remove("visible"), ms(21.5));
-      // Rad 3b (Vad känner du?) fade in 24.5–27.5
-      setTimeout(() => document.getElementById("line3b").classList.add("visible"), ms(24.5));
+      // Rad 3a fade in: 21s
+      setTimeout(() => document.getElementById("line3a").classList.add("visible"), ms(21));
+      // Rad 3a fade ut efter 3s stillestånd: 21 + 3 + 3 = 27s
+      setTimeout(() => document.getElementById("line3a").classList.remove("visible"), ms(27));
+      // Rad 3b fade in: 27s
+      setTimeout(() => document.getElementById("line3b").classList.add("visible"), ms(27));
     });
   </script>
 </body>
