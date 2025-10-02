@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'm Already Here</title>
+  <style>
+    body {
+      background-color: #f4f6f8;
+      color: #222;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+      transition: opacity 5s ease;
+    }
+    p {
+      font-size: 2.5rem;
+      margin: 1rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 5s ease, transform 5s ease;
+    }
+    p.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .inline {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 5s ease, transform 5s ease;
+    }
+    .inline.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    body.fade-out {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <p id="line1">Det är här connection börjar.</p>
+
+  <p>
+    <span id="line2a" class="inline">Stanna.</span>
+    <span id="line2b" class="inline"> Här.</span>
+  </p>
+
+  <p>
+    <span id="line3a" class="inline">Titta dig omkring.</span>
+    <span id="line3b" class="inline"> Vad känner du?</span>
+  </p>
+
+  <script>
+    window.addEventListener("load", () => {
+      // Rad 1
+      setTimeout(() => document.getElementById("line1").classList.add("visible"), 500);
+
+      // Rad 2a och 2b
+      setTimeout(() => document.getElementById("line2a").classList.add("visible"), 3000);
+      setTimeout(() => document.getElementById("line2b").classList.add("visible"), 6000);
+
+      // Rad 3a och 3b
+      setTimeout(() => document.getElementById("line3a").classList.add("visible"), 9000);
+      setTimeout(() => document.getElementById("line3b").classList.add("visible"), 12000);
+
+      // Fade out hela sidan 5 sekunder efter sista raden visas (≈17 sek totalt)
+      setTimeout(() => document.body.classList.add("fade-out"), 17000);
+    });
+  </script>
+</body>
+</html>
