@@ -2,53 +2,61 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>I'm Already Here</title>
   <style>
+    :root{
+      /* hur högt upp texten ska börja – ändra om du vill */
+      --top-offset: clamp(32px, 18vh, 200px);
+    }
+
+    /* Layout */
+    html, body { height: 100%; }
     body {
-      background-color: #E8F0EB; /* lugn bakgrund */
-      color: #2F3E46;           /* mjuk text */
-      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+      min-height: 100svh;            /* mobilvänlig viewport-höjd */
+      margin: 0;
+      padding: var(--top-offset) 20px 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-      padding: 20px;
+      align-items: center;           /* horisontellt centrerad kolumn */
+      justify-content: flex-start;   /* starta högre upp (inte mitten) */
+      text-align: center;            /* centrera själva raderna */
+      background-color: #E8F0EB;
+      color: #2F3E46;
+      font-family: "Gill Sans","Gill Sans MT",Calibri,"Trebuchet MS",sans-serif;
       overflow: hidden;
     }
 
+    /* Typografi – responsiv storlek */
     p {
-      font-size: 2.5rem; /* tillbaka till normal storlek */
-      margin: 2rem 0;
+      font-size: clamp(1.25rem, 5.5vw, 2.5rem);
+      line-height: 1.2;
+      margin: clamp(0.75rem, 2.2vw, 2rem) 0;
     }
 
-    .fade {
-      opacity: 0;
-      transition: opacity 1.5s ease;
-    }
-    .fade.visible {
-      opacity: 1;
-    }
+    /* Fade-effekter */
+    .fade { opacity: 0; transition: opacity 1.5s ease; }
+    .fade.visible { opacity: 1; }
 
+    /* Byta text utan att hoppa i sidled */
     .swap {
+      /* grid gör att alla lager lägger sig exakt ovanpå varandra */
+      display: inline-grid;
       position: relative;
-      display: inline-block;
+      place-items: center;
     }
     .swap .layer {
-      position: absolute;
-      left: 0;
-      top: 0;
+      grid-area: 1 / 1;
       opacity: 0;
       transition: opacity 3s ease;
       white-space: nowrap;
     }
-    .swap .layer.visible {
-      opacity: 1;
-    }
+    .swap .layer.visible { opacity: 1; }
+
+    /* "Sizer" används bara som måttstock och ska inte påverka layouten */
     .sizer {
+      position: absolute;  /* tar bort den från layoutflödet */
+      left: -9999px;       /* håll den utanför vyn */
       visibility: hidden;
       white-space: nowrap;
     }
@@ -61,7 +69,7 @@
   <!-- Rad 2 -->
   <p>
     <span class="swap">
-      <span class="sizer">Här.</span>
+      <span class="sizer">Tvivel finns inte.</span> <!-- längsta varianten, påverkar inte layout -->
       <span id="line2a" class="layer">Här.</span>
       <span id="line2b" class="layer">Tvivel finns inte.</span>
     </span>
@@ -70,7 +78,7 @@
   <!-- Rad 3 -->
   <p>
     <span class="swap">
-      <span class="sizer">Bryt upp, den nya dagen gryr.</span>
+      <span class="sizer">Det här är hjärtats land. Följ det.</span>
       <span id="line3a" class="layer">Bryt upp. Bryt upp.</span>
       <span id="line3b" class="layer">Det här är hjärtats land. Följ det.</span>
     </span>
@@ -80,21 +88,19 @@
     const ms = s => s * 1000;
 
     window.addEventListener("load", () => {
-      // Första raden: fade in efter 3s
-      setTimeout(() => document.getElementById("line1").classList.add("visible"), ms(3));
+      // 1) Första raden – fade in efter 3s
+      setTimeout(() => {
+        document.getElementById("line1").classList.add("visible");
+      }, ms(3));
 
-      // Andra raden: Stanna. fade in 9s
+      // 2) Andra raden – "Här." in 9s → ut 15s → "Tvivel finns inte." in 18s
       setTimeout(() => document.getElementById("line2a").classList.add("visible"), ms(9));
-      // Stanna. fade ut helt (3s stilla + 3s fade) → 15s
       setTimeout(() => document.getElementById("line2a").classList.remove("visible"), ms(15));
-      // Här. fade in EFTER fade ut är klar (ytterligare 3s) → 18s
       setTimeout(() => document.getElementById("line2b").classList.add("visible"), ms(18));
 
-      // Tredje raden: Titta dej omkring. fade in efter 3s paus → 24s
+      // 3) Tredje raden – "Bryt upp. Bryt upp." in 24s → ut 30s → slutrad in 33s
       setTimeout(() => document.getElementById("line3a").classList.add("visible"), ms(24));
-      // Titta dej omkring. fade ut helt → 30s
       setTimeout(() => document.getElementById("line3a").classList.remove("visible"), ms(30));
-      // Vad känner du? fade in → 33s
       setTimeout(() => document.getElementById("line3b").classList.add("visible"), ms(33));
     });
   </script>
