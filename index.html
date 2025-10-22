@@ -54,15 +54,15 @@
     .swap .layer {
       grid-area: 1 / 1;
       opacity: 0;
-      transition: opacity 3s ease; /* kan ha egen fade utan delay */
+      transition: opacity 3s ease;
       white-space: nowrap;
     }
     .swap .layer.visible { opacity: 1; }
 
     /* "Sizer" används bara som måttstock och ska inte påverka layouten */
     .sizer {
-      position: absolute;  /* tar bort den från layoutflödet */
-      left: -9999px;       /* håll den utanför vyn */
+      position: absolute;
+      left: -9999px;
       visibility: hidden;
       white-space: nowrap;
     }
@@ -70,13 +70,13 @@
 </head>
 <body>
   <!-- Rad 1 -->
-  <p><span id="line1" class="fade">Du är i Hjärtats landskap.</span></p>
+  <p><span id="line1" class="fade">Kaptenen, det här är Hjärtats landskap. </span></p>
 
   <!-- Rad 2 -->
   <p>
     <span class="swap">
       <span class="sizer">Tvivel finns inte.</span>
-      <span id="line2a" class="layer">Upptäck här.</span>
+      <span id="line2a" class="layer">Jag är Den Vibrerande.</span>
     </span>
   </p>
 
@@ -84,7 +84,7 @@
   <p>
     <span class="swap">
       <span class="sizer">Det här är hjärtats land. Följ det.</span>
-      <span id="line3a" class="layer">Där det känns, där finns det.</span>
+      <span id="line3a" class="layer">Följ hjärtat.</span>
     </span>
   </p>
 
@@ -92,22 +92,22 @@
     const ms = s => s * 1000;
 
     window.addEventListener("load", () => {
-      // 1) Första raden – fade in efter 3s (plus 0.5s CSS-delay, varar 3s)
+      // 1) Första raden – fade in efter 0.5s (plus 0.5s CSS-delay, varar 3s)
       setTimeout(() => {
         document.getElementById("line1").classList.add("visible");
-      }, ms(3));
+      }, ms(0.5));
 
-      // 2) Andra raden – in 9s och stanna kvar
+      // 2) Andra raden – in 6s och stanna kvar
       setTimeout(() => {
         const el = document.getElementById("line2a");
         if (el) el.classList.add("visible");
-      }, ms(9));
+      }, ms(6));
 
-      // 3) Tredje raden – in 24s och stanna kvar
+      // 3) Tredje raden – in 12s och stanna kvar
       setTimeout(() => {
         const el = document.getElementById("line3a");
         if (el) el.classList.add("visible");
-      }, ms(24));
+      }, ms(12));
     });
   </script>
 </body>
