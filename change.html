@@ -4,49 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>I'm Already Here</title>
+
   <style>
     body {
       background-color: #f4f6f8;
       color: #222;
       font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       height: 100vh;
       margin: 0;
       text-align: center;
       padding: 20px;
       overflow: hidden;
+
+      position: relative;
       transition: opacity 5s ease;
     }
+
+    /* Text */
     p {
       font-size: 2.5rem;
       margin: 1rem 0;
+
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 5s ease, transform 5s ease;
+
+      position: relative;
+      z-index: 1;
     }
+
     p.visible {
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Inline-text */
     .inline {
       display: inline-block;
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 5s ease, transform 5s ease;
     }
+
     .inline.visible {
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Fade out */
     body.fade-out {
       opacity: 0;
     }
+
+    /* ===== Middle line ===== */
+
+    .middle-line {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+
+      width: 80%;
+      height: 1px;
+
+      background-color: rgba(0, 0, 0, 0.2);
+
+      transform: translateY(-50%) scaleX(0.7);
+      opacity: 0;
+
+      transition:
+        opacity 5s ease,
+        transform 6s ease;
+
+      z-index: 0;
+    }
+
+    /* När den "andas fram" */
+    .middle-line.visible {
+      opacity: 1;
+      transform: translateY(-50%) scaleX(1);
+    }
+
   </style>
 </head>
+
 <body>
+
+  <!-- Linjen -->
+  <div class="middle-line"></div>
+
+
   <p id="line1">Det är här connection börjar.</p>
 
   <p>
@@ -59,22 +111,51 @@
     <span id="line3b" class="inline"> Vad känner du?</span>
   </p>
 
+
   <script>
     window.addEventListener("load", () => {
-      // Rad 1
-      setTimeout(() => document.getElementById("line1").classList.add("visible"), 500);
 
-      // Rad 2a och 2b
-      setTimeout(() => document.getElementById("line2a").classList.add("visible"), 3000);
-      setTimeout(() => document.getElementById("line2b").classList.add("visible"), 6000);
+      const line = document.querySelector(".middle-line");
 
-      // Rad 3a och 3b
-      setTimeout(() => document.getElementById("line3a").classList.add("visible"), 9000);
-      setTimeout(() => document.getElementById("line3b").classList.add("visible"), 12000);
+      /* Linjen andas fram */
+      setTimeout(() => {
+        line.classList.add("visible");
+      }, 1500);
 
-      // Fade out hela sidan 5 sekunder efter sista raden visas (≈17 sek totalt)
-      setTimeout(() => document.body.classList.add("fade-out"), 17000);
+
+      /* Rad 1 */
+      setTimeout(() => {
+        document.getElementById("line1").classList.add("visible");
+      }, 500);
+
+
+      /* Rad 2 */
+      setTimeout(() => {
+        document.getElementById("line2a").classList.add("visible");
+      }, 3000);
+
+      setTimeout(() => {
+        document.getElementById("line2b").classList.add("visible");
+      }, 6000);
+
+
+      /* Rad 3 */
+      setTimeout(() => {
+        document.getElementById("line3a").classList.add("visible");
+      }, 9000);
+
+      setTimeout(() => {
+        document.getElementById("line3b").classList.add("visible");
+      }, 12000);
+
+
+      /* Fade out */
+      setTimeout(() => {
+        document.body.classList.add("fade-out");
+      }, 17000);
+
     });
   </script>
+
 </body>
 </html>
