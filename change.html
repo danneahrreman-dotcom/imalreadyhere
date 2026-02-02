@@ -69,22 +69,12 @@
   </style>
 </head>
 <body>
-  <!-- Rad 1 -->
-  <p><span id="line1" class="fade"></span></p>
 
   <!-- Rad 2 -->
   <p>
     <span class="swap">
-      <span class="sizer"></span>
-      <span id="line2a" class="layer">Hur skulle det vara om det är såhär det ser ut när du är framme?</span>
-    </span>
-  </p>
-
-  <!-- Rad 3 -->
-  <p>
-    <span class="swap">
-      <span class="sizer"></span>
-      <span id="line3a" class="layer"></span>
+      <span class="sizer">Tvivel finns inte.</span>
+      <span id="line2a" class="layer">Upptäck här.</span>
     </span>
   </p>
 
@@ -92,23 +82,14 @@
     const ms = s => s * 1000;
 
     window.addEventListener("load", () => {
-      // 1) Första raden – fade in efter 0.5s (plus 0.5s CSS-delay, varar 3s)
-      setTimeout(() => {
-        document.getElementById("line1").classList.add("visible");
-      }, ms(0.5));
-
+    
       // 2) Andra raden – in 6s och stanna kvar
       setTimeout(() => {
         const el = document.getElementById("line2a");
         if (el) el.classList.add("visible");
       }, ms(6));
 
-      // 3) Tredje raden – in 12s och stanna kvar
-      setTimeout(() => {
-        const el = document.getElementById("line3a");
-        if (el) el.classList.add("visible");
-      }, ms(12));
-    });
+        });
   </script>
 </body>
 </html>
