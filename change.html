@@ -2,160 +2,113 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>I'm Already Here</title>
-
   <style>
-    body {
-      background-color: #f4f6f8;
-      color: #222;
-      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    :root{
+      /* hur högt upp texten ska börja – ändra om du vill */
+      --top-offset: clamp(32px, 18vh, 200px);
+    }
 
+    /* Layout */
+    html, body { height: 100%; }
+    body {
+      min-height: 100svh;            /* mobilvänlig viewport-höjd */
+      margin: 0;
+      padding: var(--top-offset) 20px 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-      padding: 20px;
+      align-items: center;           /* horisontellt centrerad kolumn */
+      justify-content: flex-start;   /* starta högre upp (inte mitten) */
+      text-align: center;            /* centrera själva raderna */
+      background-color: #0b535c;
+      color: #b08e1c;
+      font-family: "Gill Sans","Gill Sans MT",Calibri,"Trebuchet MS",sans-serif;
       overflow: hidden;
-
-      position: relative;
-      transition: opacity 5s ease;
     }
 
-    /* Text */
+    /* Typografi – responsiv storlek */
     p {
-      font-size: 2.5rem;
-      margin: 1rem 0;
+      font-size: clamp(1.25rem, 5.5vw, 2.5rem);
+      line-height: 1.2;
+      margin: clamp(0.75rem, 2.2vw, 2rem) 0;
+    }
+    /* större på laptop/desktop */
+    @media (min-width: 1024px) {
+      p { font-size: 3rem; } /* ≈48px */
+    }
 
+    /* Fade-effekter */
+    .fade {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 5s ease, transform 5s ease;
+      transition: opacity 3s ease 0.5s; /* 3s fade, startar efter 0.5s delay */
+    }
+    .fade.visible { opacity: 1; }
 
+    /* Byta text utan att hoppa i sidled */
+    .swap {
+      display: inline-grid;
       position: relative;
-      z-index: 1;
+      place-items: center;
     }
-
-    p.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Inline-text */
-    .inline {
-      display: inline-block;
+    .swap .layer {
+      grid-area: 1 / 1;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 5s ease, transform 5s ease;
+      transition: opacity 3s ease;
+      white-space: nowrap;
     }
+    .swap .layer.visible { opacity: 1; }
 
-    .inline.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Fade out */
-    body.fade-out {
-      opacity: 0;
-    }
-
-    /* ===== Middle line ===== */
-
-    .middle-line {
+    /* "Sizer" används bara som måttstock och ska inte påverka layouten */
+    .sizer {
       position: absolute;
-      top: 50%;
-      left: 10%;
-
-      width: 80%;
-      height: 1px;
-
-      background-color: rgba(0, 0, 0, 0.2);
-
-      transform: translateY(-50%) scaleX(0.7);
-      opacity: 0;
-
-      transition:
-        opacity 5s ease,
-        transform 6s ease;
-
-      z-index: 0;
+      left: -9999px;
+      visibility: hidden;
+      white-space: nowrap;
     }
-
-    /* När den "andas fram" */
-    .middle-line.visible {
-      opacity: 1;
-      transform: translateY(-50%) scaleX(1);
-    }
-
   </style>
 </head>
-
 <body>
+  <!-- Rad 1 -->
+  <p><span id="line1" class="fade"></span></p>
 
-  <!-- Linjen -->
-  <div class="middle-line"></div>
-
-
-  <p id="line1">Det är här connection börjar.</p>
-
+  <!-- Rad 2 -->
   <p>
-    <span id="line2a" class="inline">Stanna.</span>
-    <span id="line2b" class="inline"> Här.</span>
+    <span class="swap">
+      <span class="sizer"></span>
+      <span id="line2a" class="layer">Hur skulle det vara om det är såhär det ser ut när du är framme?</span>
+    </span>
   </p>
 
+  <!-- Rad 3 -->
   <p>
-    <span id="line3a" class="inline">Titta dig omkring.</span>
-    <span id="line3b" class="inline"> Vad känner du?</span>
+    <span class="swap">
+      <span class="sizer"></span>
+      <span id="line3a" class="layer"></span>
+    </span>
   </p>
-
 
   <script>
+    const ms = s => s * 1000;
+
     window.addEventListener("load", () => {
-
-      const line = document.querySelector(".middle-line");
-
-      /* Linjen andas fram */
-      setTimeout(() => {
-        line.classList.add("visible");
-      }, 1500);
-
-
-      /* Rad 1 */
+      // 1) Första raden – fade in efter 0.5s (plus 0.5s CSS-delay, varar 3s)
       setTimeout(() => {
         document.getElementById("line1").classList.add("visible");
-      }, 500);
+      }, ms(0.5));
 
-
-      /* Rad 2 */
+      // 2) Andra raden – in 6s och stanna kvar
       setTimeout(() => {
-        document.getElementById("line2a").classList.add("visible");
-      }, 3000);
+        const el = document.getElementById("line2a");
+        if (el) el.classList.add("visible");
+      }, ms(6));
 
+      // 3) Tredje raden – in 12s och stanna kvar
       setTimeout(() => {
-        document.getElementById("line2b").classList.add("visible");
-      }, 6000);
-
-
-      /* Rad 3 */
-      setTimeout(() => {
-        document.getElementById("line3a").classList.add("visible");
-      }, 9000);
-
-      setTimeout(() => {
-        document.getElementById("line3b").classList.add("visible");
-      }, 12000);
-
-
-      /* Fade out */
-      setTimeout(() => {
-        document.body.classList.add("fade-out");
-      }, 17000);
-
+        const el = document.getElementById("line3a");
+        if (el) el.classList.add("visible");
+      }, ms(12));
     });
   </script>
-
 </body>
 </html>
