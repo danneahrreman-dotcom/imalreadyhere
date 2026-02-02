@@ -13,29 +13,27 @@
     /* Layout */
     html, body { height: 100%; }
     body {
-      min-height: 100svh;            /* mobilvänlig viewport-höjd */
-      margin: 0;
-      padding: var(--top-offset) 20px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;           /* horisontellt centrerad kolumn */
-      justify-content: flex-start;   /* starta högre upp (inte mitten) */
-      text-align: center;            /* centrera själva raderna */
-      background-color: #0b535c;
-      color: #b08e1c;
-      font-family: "Gill Sans","Gill Sans MT",Calibri,"Trebuchet MS",sans-serif;
-      overflow: hidden;
+     min-height: 100svh;
+  margin: 0;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* ← centrerar vertikalt */
+
+  text-align: center;
+  background-color: #0b535c;
+  color: #b08e1c;
+  font-family: "Gill Sans","Gill Sans MT",Calibri,"Trebuchet MS",sans-serif;
+  overflow: hidden;
     }
 
-    /* Typografi – responsiv storlek */
-    p {
-      font-size: clamp(1.25rem, 5.5vw, 2.5rem);
-      line-height: 1.2;
-      margin: clamp(0.75rem, 2.2vw, 2rem) 0;
-    }
-    /* större på laptop/desktop */
-    @media (min-width: 1024px) {
-      p { font-size: 3rem; } /* ≈48px */
+    /* Typografi – lite mindre */
+p {
+  font-size: clamp(1rem, 4vw, 2rem);
+  line-height: 1.25;
+  margin: 0;
     }
 
     /* Fade-effekter */
